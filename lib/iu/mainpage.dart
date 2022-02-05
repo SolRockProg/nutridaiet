@@ -5,7 +5,7 @@ import 'package:nutridaiet/model/file.dart';
 
 import 'customWidgets/DropZoneWidget.dart';
 import 'customWidgets/DroppedFileWidget.dart';
-import 'customWidgets/ListViewScrollWidget.dart';
+import 'customWidgets/GridViewScrollWidget.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ListViewScrollWidget(),
+                  GridViewScrollWidget(),
                   DroppedFileWidget(file: file),
                   const Padding(padding: EdgeInsets.all(16)),
                   SizedBox(

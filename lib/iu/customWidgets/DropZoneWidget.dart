@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:nutridaiet/iu/customWidgets/ButtonApp.dart';
 import 'package:nutridaiet/model/file.dart';
 
 class DropZoneWidget extends StatefulWidget {
@@ -45,22 +46,13 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
                   style: TextStyle(color: Colors.white, fontSize: 24),
                 ),
                 const Padding(padding: EdgeInsets.all(16)),
-                ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(16),
-                        primary: Color(0xFF976f4f),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () async {
-                      final events = await controller.pickFiles();
-                      if (events.isEmpty) return;
-                      getFile(events.first);
-                    },
+                ButtonApp(
+                    text: 'Buscar imagenes',
                     icon: const Icon(
                       Icons.search,
                       size: 32,
                     ),
-                    label: const Text('Buscar imagenes')),
+                    onPressed: () => {})
               ],
             ),
           ),
@@ -82,7 +74,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        color: isFileAbove ? Color(0xFF007a79) : Color(0xAD007a79),
+        color: isFileAbove ? Color(0xFF007a79) : Color(0xFF007A7A),
         padding: const EdgeInsets.all(10),
         child: DottedBorder(
             borderType: BorderType.RRect,
