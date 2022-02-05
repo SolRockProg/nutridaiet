@@ -8,30 +8,46 @@ class DroppedFileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildImage();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        buildImage(),
+        if (file != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Text(file!.name),
+          )
+      ],
+    );
   }
 
   Widget buildImage() {
     if (file == null) return buildEmptyFile('Sin imagen');
 
-    return Image.network(
-      file!.url,
-      width: 120,
-      height: 120,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) =>
-          buildEmptyFile('El formato no es el correcto'),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Image.network(
+        file!.url,
+        width: 120,
+        height: 120,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            buildEmptyFile('El formato no es el correcto'),
+      ),
     );
   }
 
-  Widget buildEmptyFile(String s) => Container(
-        width: 120,
-        height: 120,
-        color: Colors.blue.shade300,
-        child: Center(
-          child: Text(
-            s,
-            style: const TextStyle(color: Colors.white),
+  Widget buildEmptyFile(String s) => ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          width: 120,
+          height: 120,
+          color: Color(0xFF007a79),
+          child: Center(
+            child: Text(
+              s,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ),
       );

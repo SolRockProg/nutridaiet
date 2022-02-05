@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
@@ -21,8 +22,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: isFileAbove ? Colors.blue : Colors.blue.shade300,
+    return buildDecoration(
       child: Stack(
         children: [
           DropzoneView(
@@ -48,7 +48,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(16),
-                        primary: Colors.green,
+                        primary: Color(0xFF976f4f),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () async {
@@ -76,5 +76,23 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
     final file = File(url: url, name: name);
 
     widget.onDroppedFile(file);
+  }
+
+  Widget buildDecoration({required Stack child}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        color: isFileAbove ? Color(0xFF007a79) : Color(0xAD007a79),
+        padding: const EdgeInsets.all(10),
+        child: DottedBorder(
+            borderType: BorderType.RRect,
+            color: Colors.white,
+            padding: EdgeInsets.zero,
+            radius: const Radius.circular(10),
+            dashPattern: const [8, 4],
+            strokeWidth: 3,
+            child: child),
+      ),
+    );
   }
 }
