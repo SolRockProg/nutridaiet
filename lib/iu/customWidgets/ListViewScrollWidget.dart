@@ -27,7 +27,8 @@ class ListViewScrollWidget extends StatelessWidget {
               return recetasListState.when(
                   data: (data) => _buildList(),
                   error: (err, _) => Text("Error: " + err.toString()),
-                  loading: () => const CircularProgressIndicator());
+                  loading: () =>
+                      Center(child: const CircularProgressIndicator()));
             },
           ),
         ));

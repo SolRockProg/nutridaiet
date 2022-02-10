@@ -28,6 +28,7 @@ class _RecetasPageState extends State<RecetasPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  _logo(),
                   _buildListContainer(GridViewScrollWidget(), "Recetas", false),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
                   _buildListContainer(ListViewScrollWidget(), "Despensa", true)
@@ -74,4 +75,32 @@ class _RecetasPageState extends State<RecetasPage> {
           )),
     );
   }
+}
+
+Widget _logo() {
+  const style = TextStyle(fontSize: 60, fontFamily: 'Arvo');
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image.asset(
+        'lib/iu/images/nu.png',
+        width: 90,
+        height: 90,
+      ),
+      const Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+      const Text(
+        "Nutrid",
+        style: style,
+      ),
+      const Text(
+        "AI",
+        style: TextStyle(
+            fontSize: 60, fontFamily: 'Arvo', color: Color(0xFF007a79)),
+      ),
+      const Text(
+        "et",
+        style: style,
+      )
+    ],
+  );
 }
