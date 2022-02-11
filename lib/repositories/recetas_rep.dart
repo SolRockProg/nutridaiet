@@ -15,13 +15,14 @@ class RecetasRepositoryMock implements IRecetasRepository {
   @override
   Future<InfoResponse> sendTicket(File file) async {
     await Future.delayed(const Duration(seconds: 2));
-    throw InfoResponse(statusCode: 200);
+    return InfoResponse(statusCode: 200);
   }
 
   @override
   Future<Pair<List<Alimento>, InfoResponse>> getDespensa() async {
     await Future.delayed(const Duration(seconds: 2));
-    throw Pair(['Azucar', 'Sal', 'Manzana'], InfoResponse(statusCode: 200));
+    return Pair([Alimento('Azucar'), Alimento('Sal'), Alimento('Manzana')],
+        InfoResponse(statusCode: 200));
   }
 }
 
@@ -42,7 +43,8 @@ class RecetasRepository implements IRecetasRepository {
   Future<Pair<List<Alimento>, InfoResponse>> getDespensa() async {
     var uri = Uri.parse("");
 
-    Pair<List<Alimento>, InfoResponse> responseDespensa  = Pair([], InfoResponse(statusCode: 200));
+    Pair<List<Alimento>, InfoResponse> responseDespensa =
+        Pair([], InfoResponse(statusCode: 200));
 
     final response = await http.get(uri);
 
