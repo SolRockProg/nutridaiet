@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutridaiet/controllers/recetas_controller.dart';
+import 'package:nutridaiet/controllers/alimentos_controller.dart';
 import 'package:nutridaiet/iu/customWidgets/ListViewScrollWidget.dart';
 import 'package:nutridaiet/iu/customWidgets/pruebaDialog.dart';
 import 'customWidgets/ButtonApp.dart';
@@ -29,6 +29,7 @@ class _RecetasPageState extends State<RecetasPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _logo(),
+                  Padding(padding: EdgeInsets.symmetric(vertical: 16)),
                   _buildListContainer(GridViewScrollWidget(), "Recetas", false),
                   const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
                   _buildListContainer(ListViewScrollWidget(), "Despensa", true)
@@ -84,8 +85,8 @@ Widget _logo() {
     children: [
       Image.asset(
         'lib/iu/images/nu.png',
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 80,
       ),
       const Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
       const Text(
