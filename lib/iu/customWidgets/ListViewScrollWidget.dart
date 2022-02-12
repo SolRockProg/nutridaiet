@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/controllers/alimentos_controller.dart';
 import 'package:nutridaiet/model/alimento.dart';
+import 'package:nutridaiet/utils/capitalize.dart';
 
 class ListViewScrollWidget extends ConsumerStatefulWidget {
   const ListViewScrollWidget({
@@ -48,15 +49,35 @@ class ListViewScrollWidgetState extends ConsumerState<ListViewScrollWidget> {
       physics:
           const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       itemBuilder: (context, index) {
+        int cantidad = despensa[index].cantidad;
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Chip(
-            padding: const EdgeInsets.all(16),
-            label: Text(
-              despensa[index].nombre,
-              style: const TextStyle(color: Colors.white, fontSize: 18),
-            ),
-            backgroundColor: Color(0xff007a79),
+          child: Stack(
+            children: [
+              Chip(
+                padding: const EdgeInsets.all(16),
+                label: Text(
+                  despensa[index].nombre.capitalize(),
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                backgroundColor: const Color(0xff007a79),
+              ),
+              if (cantidad > 1)
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    height: 24,
+                    width: 24,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(width: 1, color: Colors.white)),
+                    child: Center(
+                        child: Text("x" + despensa[index].cantidad.toString())),
+                  ),
+                )
+            ],
           ),
         );
       },

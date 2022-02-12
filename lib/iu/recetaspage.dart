@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutridaiet/controllers/alimentos_controller.dart';
 import 'package:nutridaiet/iu/customWidgets/ListViewScrollWidget.dart';
-import 'package:nutridaiet/iu/customWidgets/pruebaDialog.dart';
+import 'package:nutridaiet/iu/customWidgets/FileUploadDialog.dart';
 import 'customWidgets/ButtonApp.dart';
 import 'customWidgets/GridViewScrollWidget.dart';
 
@@ -23,19 +23,16 @@ class _RecetasPageState extends State<RecetasPage> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
-                height: 1200,
-                width: 800,
+                width: 1200,
                 color: const Color(0xFFc7cedf),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _logo(),
-                    Padding(padding: EdgeInsets.symmetric(vertical: 16)),
                     _buildListContainer(
-                        GridViewScrollWidget(), "Recetas", false),
-                    const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
+                        const GridViewScrollWidget(), "Recetas", false),
                     _buildListContainer(
-                        ListViewScrollWidget(), "Despensa", true)
+                        const ListViewScrollWidget(), "Despensa", true)
                   ],
                 ),
               ),
@@ -45,67 +42,76 @@ class _RecetasPageState extends State<RecetasPage> {
   }
 
   Widget _buildListContainer(Widget list, String title, bool showButton) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-          width: 750,
-          color: Colors.white.withAlpha(100),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(title),
-                    if (showButton)
-                      ButtonApp(
-                        text: "Subir ticket",
-                        icon: const Icon(Icons.cloud_upload),
-                        onPressed: () => {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  const PruebaDialog())
-                        },
-                      )
-                  ],
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+            width: 1100,
+            color: Colors.white.withAlpha(100),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(fontSize: 22, fontFamily: 'Arvo'),
+                      ),
+                      if (showButton)
+                        ButtonApp(
+                          text: "Subir ticket",
+                          icon: const Icon(Icons.cloud_upload),
+                          onPressed: () => {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const PruebaDialog())
+                          },
+                        )
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: list,
-              ),
-            ],
-          )),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: list,
+                ),
+              ],
+            )),
+      ),
     );
   }
 }
 
 Widget _logo() {
   const style = TextStyle(fontSize: 60, fontFamily: 'Arvo');
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Image.asset(
-        'lib/iu/images/nu.png',
-        width: 80,
-        height: 80,
-      ),
-      const Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-      const Text(
-        "Nutrid",
-        style: style,
-      ),
-      const Text(
-        "AI",
-        style: TextStyle(
-            fontSize: 60, fontFamily: 'Arvo', color: Color(0xFF007a79)),
-      ),
-      const Text(
-        "et",
-        style: style,
-      )
-    ],
+  return Padding(
+    padding: const EdgeInsets.only(top: 16),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          'lib/iu/images/nu.png',
+          width: 80,
+          height: 80,
+        ),
+        const Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
+        const Text(
+          "Nutrid",
+          style: style,
+        ),
+        const Text(
+          "AI",
+          style: TextStyle(
+              fontSize: 60, fontFamily: 'Arvo', color: Color(0xFF007a79)),
+        ),
+        const Text(
+          "et",
+          style: style,
+        )
+      ],
+    ),
   );
 }

@@ -6,8 +6,10 @@ class Receta extends Equatable {
   final int tiempo;
   final String descripcion;
   final List<String> steps;
+  final double calorias;
 
-  const Receta(this.id, this.name, this.tiempo, this.descripcion, this.steps);
+  const Receta(this.id, this.name, this.tiempo, this.descripcion, this.steps,
+      this.calorias);
 
   @override
   List<Object?> get props => [id, name, tiempo, descripcion, steps];
@@ -17,5 +19,6 @@ class Receta extends Equatable {
         name = json['nombre'],
         tiempo = json['minutes'],
         descripcion = json['description'],
-        steps = (json['steps'] as List).map((item) => item as String).toList();
+        steps = (json['steps'] as List).map((item) => item as String).toList(),
+        calorias = json['calorias'];
 }
