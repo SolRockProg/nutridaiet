@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/controllers/recetas_controller.dart';
 import 'package:nutridaiet/model/receta.dart';
+import 'package:nutridaiet/utils/capitalize.dart';
 
 class GridViewScrollWidget extends ConsumerStatefulWidget {
-  GridViewScrollWidget({
+  const GridViewScrollWidget({
     Key? key,
   }) : super(key: key);
 
@@ -56,17 +57,69 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
           const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       itemBuilder: (context, index) {
         return Card(
-            color: Color(0xff007a79),
-            child: Center(
+            color: const Color(0xff007a79),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Text(recetas[index].name),
-                  //TODO: Hacer diseño
+                  TextCustom(text: recetas[index].name),
+                  const Padding(padding: EdgeInsets.all(4)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.access_time_outlined,
+                            color: Colors.white,
+                          ),
+                          const Padding(padding: EdgeInsets.only(right: 3)),
+                          TextCustom(text: recetas[index].tiempo.toString()),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.countertops_outlined,
+                            color: Colors.white,
+                          ),
+                          const Padding(padding: EdgeInsets.only(right: 3)),
+                          TextCustom(
+                              text: recetas[index].steps.length.toString()),
+                        ],
+                      )
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.all(4)),
+                  TextCustom(
+                    text: recetas[index].descripcion,
+                    length: 3,
+                  )
                 ],
               ),
             ));
       },
       itemCount: recetas.length,
+    );
+  }
+}
+
+class TextCustom extends StatelessWidget {
+  final String text;
+  final int? length;
+  const TextCustom({
+    Key? key,
+    required this.text,
+    this.length,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text.capitalize(),
+      style: TextStyle(color: Colors.white),
+      maxLines: length,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

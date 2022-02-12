@@ -16,27 +16,31 @@ class _RecetasPageState extends State<RecetasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              height: 1200,
-              width: 800,
-              color: const Color(0xFFc7cedf),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _logo(),
-                  Padding(padding: EdgeInsets.symmetric(vertical: 16)),
-                  _buildListContainer(GridViewScrollWidget(), "Recetas", false),
-                  const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
-                  _buildListContainer(ListViewScrollWidget(), "Despensa", true)
-                ],
+      body: SingleChildScrollView(
+        child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(16),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                height: 1200,
+                width: 800,
+                color: const Color(0xFFc7cedf),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _logo(),
+                    Padding(padding: EdgeInsets.symmetric(vertical: 16)),
+                    _buildListContainer(
+                        GridViewScrollWidget(), "Recetas", false),
+                    const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
+                    _buildListContainer(
+                        ListViewScrollWidget(), "Despensa", true)
+                  ],
+                ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 
