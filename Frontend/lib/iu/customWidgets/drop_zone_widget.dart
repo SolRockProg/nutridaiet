@@ -1,8 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:nutridaiet/iu/customWidgets/ButtonApp.dart';
+import 'package:nutridaiet/iu/customWidgets/button_app.dart';
 import 'package:nutridaiet/model/file.dart';
 
 class DropZoneWidget extends StatefulWidget {
@@ -74,7 +73,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        color: isFileAbove ? Color(0xFF007a79) : Color(0xFF007A7A),
+        color: isFileAbove ? const Color(0xFF007a79) : const Color(0xFF007A7A),
         padding: const EdgeInsets.all(10),
         child: DottedBorder(
             borderType: BorderType.RRect,
