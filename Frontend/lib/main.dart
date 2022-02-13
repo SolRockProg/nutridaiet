@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nutridaiet/iu/valoracionesPage.dart';
 import 'package:nutridaiet/iu/recetaspage.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        "/": (_) => const RecetasPage(),
+        "/": (_) => const ValoracionesPage(),
       },
     );
   }

@@ -19,4 +19,12 @@ class RecetasController extends StateNotifier<AsyncValue<List<Receta>>> {
       print("Error: " + response.second.statusCode.toString());
     }
   }
+
+  Future<void> setValoracion(Receta receta) async {
+    state.maybeWhen(
+        orElse: () {},
+        data: (oldReceta) => state = AsyncValue.data(
+            oldReceta.map((e) => e.id == receta.id ? receta : e).toList()));
+    await _reader(recetasRespositoryProvider).setValoracion(receta);
+  }
 }

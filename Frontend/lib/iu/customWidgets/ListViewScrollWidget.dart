@@ -16,8 +16,6 @@ class ListViewScrollWidget extends ConsumerStatefulWidget {
 }
 
 class ListViewScrollWidgetState extends ConsumerState<ListViewScrollWidget> {
-  final List<int> numbers = List<int>.generate(10, (i) => i + 1);
-
   @override
   void initState() {
     super.initState();

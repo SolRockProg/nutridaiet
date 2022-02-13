@@ -4,6 +4,7 @@ import 'package:nutridaiet/iu/customWidgets/ListViewScrollWidget.dart';
 import 'package:nutridaiet/iu/customWidgets/FileUploadDialog.dart';
 import 'customWidgets/ButtonApp.dart';
 import 'customWidgets/GridViewScrollWidget.dart';
+import 'customWidgets/logo.dart';
 
 class RecetasPage extends StatefulWidget {
   const RecetasPage({Key? key}) : super(key: key);
@@ -28,9 +29,9 @@ class _RecetasPageState extends State<RecetasPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _logo(),
-                    _buildListContainer(
-                        const GridViewScrollWidget(), "Recetas", false),
+                    logo(),
+                    _buildListContainer(const GridViewScrollWidget(height: 500),
+                        "Recetas", false),
                     _buildListContainer(
                         const ListViewScrollWidget(), "Despensa", true)
                   ],
@@ -83,35 +84,4 @@ class _RecetasPageState extends State<RecetasPage> {
       ),
     );
   }
-}
-
-Widget _logo() {
-  const style = TextStyle(fontSize: 60, fontFamily: 'Arvo');
-  return Padding(
-    padding: const EdgeInsets.only(top: 16),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          'lib/iu/images/nu.png',
-          width: 80,
-          height: 80,
-        ),
-        const Padding(padding: EdgeInsets.symmetric(horizontal: 16)),
-        const Text(
-          "Nutrid",
-          style: style,
-        ),
-        const Text(
-          "AI",
-          style: TextStyle(
-              fontSize: 60, fontFamily: 'Arvo', color: Color(0xFF007a79)),
-        ),
-        const Text(
-          "et",
-          style: style,
-        )
-      ],
-    ),
-  );
 }

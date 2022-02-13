@@ -4,4 +4,5 @@ import 'package:nutridaiet/utils/tuple.dart';
 
 abstract class IRecetasRepository {
   Future<Pair<List<Receta>, InfoResponse>> getRecetas();
+  Future<InfoResponse> setValoracion(Receta receta);
 }

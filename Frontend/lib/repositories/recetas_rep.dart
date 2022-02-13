@@ -26,4 +26,16 @@ class RecetasRepository extends IRecetasRepository {
 
     return Pair(recetas, InfoResponse(statusCode: response.statusCode));
   }
+
+  @override
+  Future<InfoResponse> setValoracion(Receta receta) async {
+    var uri = Uri.parse(url +
+        "/new_interaction?username=1212&rate=" +
+        receta.valoracion.toString() +
+        "&recipeId=" +
+        receta.id.toString());
+    var response = await http
+        .post(uri, headers: {HttpHeaders.accessControlAllowOriginHeader: "*"});
+    return InfoResponse(statusCode: response.statusCode);
+  }
 }

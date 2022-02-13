@@ -1,13 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/controllers/recetas_controller.dart';
 import 'package:nutridaiet/model/receta.dart';
 import 'package:nutridaiet/utils/capitalize.dart';
 
 class GridViewScrollWidget extends ConsumerStatefulWidget {
+  final double? height;
   const GridViewScrollWidget({
     Key? key,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -16,8 +19,6 @@ class GridViewScrollWidget extends ConsumerStatefulWidget {
 }
 
 class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
-  final List<int> numbers = List<int>.generate(10, (i) => i + 1);
-
   @override
   void initState() {
     super.initState();
@@ -28,7 +29,7 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
   Widget build(BuildContext context) {
     final recetasListState = ref.watch(recetasState);
     return SizedBox(
-        height: 500,
+        height: widget.height ?? MediaQuery.of(context).size.height * 0.75,
         width: double.infinity,
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(
@@ -68,7 +69,7 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextCustom(
                 text: recetas[index].name,
@@ -76,11 +77,13 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
                 fontfamily: 'Arvo',
                 textAlign: TextAlign.center,
               ),
+              Spacer(),
               TextCustom(
                 text: recetas[index].descripcion,
-                maxLines: 6,
+                maxLines: 4,
                 textAlign: TextAlign.justify,
               ),
+              Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -107,6 +110,26 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
                     ],
                   )
                 ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              RatingBar.builder(
+                itemSize: 25,
+                initialRating: recetas[index].valoracion,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  Receta receta = recetas[index].copyWith(valoracion: rating);
+                  ref.read(recetasState.notifier).setValoracion(receta);
+                },
               ),
             ],
           ),
