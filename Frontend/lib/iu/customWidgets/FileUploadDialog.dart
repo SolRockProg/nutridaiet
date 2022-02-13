@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/model/file.dart';
 
+import '../../controllers/alimentos_controller.dart';
 import 'DropZoneWidget.dart';
 
-class PruebaDialog extends StatefulWidget {
+class PruebaDialog extends ConsumerStatefulWidget {
   const PruebaDialog({Key? key}) : super(key: key);
 
   @override
-  State<PruebaDialog> createState() => _PruebaDialogState();
+  ConsumerState<PruebaDialog> createState() => _PruebaDialogState();
 }
 
-class _PruebaDialogState extends State<PruebaDialog> {
-  File? file;
-
+class _PruebaDialogState extends ConsumerState<PruebaDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -25,7 +25,8 @@ class _PruebaDialogState extends State<PruebaDialog> {
         height: 300,
         width: 700,
         child: DropZoneWidget(
-          onDroppedFile: (file) => {setState(() => this.file = file)},
+          onDroppedFile: (file) =>
+              {() => ref.read(alimentosState.notifier).sendTicket(file)},
         ),
       ),
     );

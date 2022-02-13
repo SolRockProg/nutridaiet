@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/model/alimento.dart';
 import 'package:nutridaiet/model/receta.dart';
 import 'package:nutridaiet/repositories/recetas_rep.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final recetasState =
     StateNotifierProvider<RecetasController, AsyncValue<List<Receta>>>(
@@ -25,6 +26,9 @@ class RecetasController extends StateNotifier<AsyncValue<List<Receta>>> {
         orElse: () {},
         data: (oldReceta) => state = AsyncValue.data(
             oldReceta.map((e) => e.id == receta.id ? receta : e).toList()));
-    await _reader(recetasRespositoryProvider).setValoracion(receta);
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("nombre") != null) {
+      await _reader(recetasRespositoryProvider).setValoracion(receta);
+    }
   }
 }

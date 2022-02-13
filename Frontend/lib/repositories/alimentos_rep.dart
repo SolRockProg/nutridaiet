@@ -9,51 +9,45 @@ import 'package:nutridaiet/utils/error_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:nutridaiet/utils/strings.dart';
 import 'package:nutridaiet/utils/tuple.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final alimentosRepositoryProvider =
     Provider<IRecetasRepository>((_) => RecetasRepository());
 
-class RecetasRepositoryMock implements IRecetasRepository {
-  @override
-  Future<InfoResponse> sendTicket(File file) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return InfoResponse(statusCode: 200);
-  }
-
-  @override
-  Future<Pair<List<Alimento>, InfoResponse>> getDespensa() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return Pair([
-      Alimento('Azucar', 1, 1),
-      Alimento('Sal', 1, 1),
-      Alimento('Manzana', 1, 1)
-    ], InfoResponse(statusCode: 200));
-  }
-}
-
 class RecetasRepository implements IRecetasRepository {
   @override
-  Future<InfoResponse> sendTicket(File file) async {
-    var uri = Uri.parse("");
+  Future<Pair<List<Alimento>, InfoResponse>> sendTicket(File file) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var uri =
+        Uri.parse(url + "/pantry/ticket?user=" + prefs.getString('nombre')!);
     var img = await http.MultipartFile.fromPath("file", file.url);
 
     var request = http.MultipartRequest("POST", uri);
     request.files.add(img);
-    var response = await request.send();
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
 
-    return InfoResponse(statusCode: response.statusCode);
+    List<Alimento> despensa = parseDespensa(response);
+
+    return Pair(despensa, InfoResponse(statusCode: response.statusCode));
   }
 
   @override
   Future<Pair<List<Alimento>, InfoResponse>> getDespensa() async {
-    var uri = Uri.parse(url + "/pantry?username=1212");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var uri = Uri.parse(url + "/pantry?username=" + prefs.getString('nombre')!);
 
     var response = await http
         .get(uri, headers: {HttpHeaders.accessControlAllowOriginHeader: "*"});
+    List<Alimento> despensa = parseDespensa(response);
+
+    return Pair(despensa, InfoResponse(statusCode: response.statusCode));
+  }
+
+  List<Alimento> parseDespensa(http.Response response) {
     List<Alimento> despensa = (json.decode(response.body) as List)
         .map((alimento) => Alimento.fromJson(alimento))
         .toList();
-
-    return Pair(despensa, InfoResponse(statusCode: response.statusCode));
+    return despensa;
   }
 }

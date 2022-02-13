@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nutridaiet/controllers/recetas_controller.dart';
+
 import 'package:nutridaiet/iu/customWidgets/ButtonApp.dart';
+import 'package:nutridaiet/repositories/recetas_rep.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'customWidgets/GridViewScrollWidget.dart';
 import 'customWidgets/logo.dart';
 
-class ValoracionesPage extends StatefulWidget {
-  const ValoracionesPage({Key? key}) : super(key: key);
+class ValoracionesPage extends ConsumerStatefulWidget {
+  final PageController controller;
+  const ValoracionesPage({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
   _ValoracionesPageState createState() => _ValoracionesPageState();
 }
 
-class _ValoracionesPageState extends State<ValoracionesPage> {
+class _ValoracionesPageState extends ConsumerState<ValoracionesPage> {
+  String? nombre;
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,18 +34,41 @@ class _ValoracionesPageState extends State<ValoracionesPage> {
               borderRadius: BorderRadius.circular(10),
               child: Container(
                 width: 1200,
+                padding: const EdgeInsets.all(10),
                 color: const Color(0xFFc7cedf),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     logo(),
+                    _username(),
                     _buildListContainer(const GridViewScrollWidget(),
-                        "Valora las recetas", false),
+                        "Necesitamos que valore las siguientes recetas", false),
+                    _creaPerfil()
                   ],
                 ),
               ),
             )),
       ),
+    );
+  }
+
+  Widget _username() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+            child: Container(
+          width: 500,
+          color: Colors.white.withAlpha(100),
+          child: TextField(
+            onChanged: (value) => nombre = value,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: "Inserta tu nombre",
+            ),
+          ),
+        )),
+      ],
     );
   }
 
@@ -55,7 +89,8 @@ class _ValoracionesPageState extends State<ValoracionesPage> {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(fontSize: 22, fontFamily: 'Arvo'),
+                        style:
+                            const TextStyle(fontSize: 22, fontFamily: 'Arvo'),
                       ),
                     ],
                   ),
@@ -68,5 +103,49 @@ class _ValoracionesPageState extends State<ValoracionesPage> {
             )),
       ),
     );
+  }
+
+  Widget _creaPerfil() {
+    return ElevatedButton(
+        onPressed: () async {
+          if (nombre == null) {
+            return;
+          }
+          setState(() {
+            loading = true;
+          });
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('nombre', nombre!);
+          var recetas = ref.read(recetasState).value;
+          var valoraRepo = ref.read(recetasRespositoryProvider);
+          if (recetas != null) {
+            for (var receta in recetas) {
+              await valoraRepo.setValoracion(receta);
+            }
+          }
+          widget.controller.animateToPage(
+            1,
+            curve: Curves.bounceIn,
+            duration: const Duration(
+              milliseconds: 500,
+            ),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(16),
+            primary: const Color(0xFF976f4f),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10))),
+        child: SizedBox(
+          height: 30,
+          width: 100,
+          child: loading
+              ? const Center(
+                  child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator()))
+              : const Center(child: Text("A recetear!")),
+        ));
   }
 }
