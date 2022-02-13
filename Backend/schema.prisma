@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgres"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-py"
+}
+
+model Interaccion {
+  id         Int     @id @default(autoincrement())
+  puntuacion Float
+  usuario    Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId  Int
+  receta     Recetas @relation(fields: [recetaId], references: [id])
+  recetaId   Int
+}
+
+model Usuario {
+  id                   Int                    @id @default(autoincrement())
+  nombre               String                 @unique
+  inter                Interaccion[]
+  IngredientesDespensa IngredientesDespensa[]
+  limiteCalorias       Float?
+  trained              Boolean                @default(false)
+}
+
+model Recetas {
+  id           Int            @id @default(autoincrement())
+  nombre       String
+  calorias     Float?
+  inter        Interaccion[]
+  minutes      Int
+  description  String?
+  steps        String[]
+  ingredientes Ingredientes[] @relation(references: [id])
+}
+
+model Ingredientes {
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @unique
+  Recetas              Recetas[]              @relation(references: [id])
+  IngredientesDespensa IngredientesDespensa[]
+}
+
+model IngredientesDespensa {
+  cantidad       Int          @default(0)
+  usuario        Usuario      @relation(fields: [usuarioId], references: [id])
+  usuarioId      Int
+  Ingrediente    Ingredientes @relation(fields: [ingredientesId], references: [id])
+  ingredientesId Int
+
+  @@id([usuarioId, ingredientesId])
+}
