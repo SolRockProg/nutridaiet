@@ -23,12 +23,8 @@ class _InitialPageState extends State<InitialPage> {
     final prefs = await SharedPreferences.getInstance();
     String? nombre = prefs.getString("nombre");
     if (nombre != null) {
-      controller.animateToPage(
+      controller.jumpToPage(
         1,
-        curve: Curves.bounceIn,
-        duration: const Duration(
-          milliseconds: 500,
-        ),
       );
     }
   }

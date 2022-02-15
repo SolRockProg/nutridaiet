@@ -29,7 +29,7 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
   Widget build(BuildContext context) {
     final recetasListState = ref.watch(recetasState);
     return SizedBox(
-        height: widget.height ?? MediaQuery.of(context).size.height * 0.75,
+        // height: widget.height ?? MediaQuery.of(context).size.height * 0.75,
         width: double.infinity,
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(

@@ -16,28 +16,34 @@ class _RecetasPageState extends State<RecetasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                width: 1200,
-                color: const Color(0xFFc7cedf),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Logo(),
-                    _buildListContainer(const GridViewScrollWidget(height: 500),
-                        "Recetas", false),
-                    _buildListContainer(
-                        const ListViewScrollWidget(), "Despensa", true)
-                  ],
-                ),
+      body: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(16),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              width: 1200,
+              color: const Color(0xFFc7cedf),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Logo(),
+                  Expanded(
+                    flex: 8,
+                    child: _buildListContainer(
+                        const GridViewScrollWidget(height: 500),
+                        "Recetas",
+                        false),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: _buildListContainer(
+                        const ListViewScrollWidget(), "Despensa", true),
+                  )
+                ],
               ),
-            )),
-      ),
+            ),
+          )),
     );
   }
 
@@ -75,9 +81,11 @@ class _RecetasPageState extends State<RecetasPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: list,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: list,
+                  ),
                 ),
               ],
             )),
