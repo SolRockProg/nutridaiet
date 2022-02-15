@@ -1,9 +1,9 @@
-# NutridAIet
+# NutridAIet 🦦
 
 **La aplicación para planificar tu menú con IA**
 
 ## Descripción
-Nutridaiet es una aplicación capaz de ayudarte a planificar cual es el menú que dentro de tus restricciones calóricas te va a satisfacer más.
+NutridAIet es una aplicación capaz de ayudarte a planificar cual es el menú que dentro de tus restricciones calóricas te va a satisfacer más.
 
 ## Funcionamiento
 La funcionalidad de recomendación de recetas se fundamenta en el filtrado colaborativo. En concreto se utiliza la implementación del algoritmo SVD ofrecida por la librería Surprise.
