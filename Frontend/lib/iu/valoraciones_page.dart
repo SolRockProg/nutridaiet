@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/controllers/recetas_controller.dart';
 
-import 'package:nutridaiet/iu/customWidgets/ButtonApp.dart';
 import 'package:nutridaiet/repositories/recetas_rep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'customWidgets/GridViewScrollWidget.dart';
+import 'customWidgets/grid_view_scroll_widget.dart';
 import 'customWidgets/logo.dart';
 
 class ValoracionesPage extends ConsumerStatefulWidget {
@@ -39,7 +38,7 @@ class _ValoracionesPageState extends ConsumerState<ValoracionesPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    logo(),
+                    const Logo(),
                     _username(),
                     _buildListContainer(const GridViewScrollWidget(),
                         "Necesitamos que valore las siguientes recetas", false),

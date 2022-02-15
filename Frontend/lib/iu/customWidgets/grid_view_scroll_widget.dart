@@ -77,13 +77,13 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
                 fontfamily: 'Arvo',
                 textAlign: TextAlign.center,
               ),
-              Spacer(),
+              const Spacer(),
               TextCustom(
                 text: recetas[index].descripcion,
                 maxLines: 4,
                 textAlign: TextAlign.justify,
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

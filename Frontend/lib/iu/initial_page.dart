@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutridaiet/iu/recetaspage.dart';
-import 'package:nutridaiet/iu/valoracionesPage.dart';
+import 'package:nutridaiet/iu/valoraciones_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InitialPage extends StatefulWidget {

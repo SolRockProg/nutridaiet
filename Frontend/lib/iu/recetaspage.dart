@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nutridaiet/controllers/alimentos_controller.dart';
-import 'package:nutridaiet/iu/customWidgets/ListViewScrollWidget.dart';
-import 'package:nutridaiet/iu/customWidgets/FileUploadDialog.dart';
-import 'customWidgets/ButtonApp.dart';
-import 'customWidgets/GridViewScrollWidget.dart';
+import 'package:nutridaiet/iu/customWidgets/list_view_scroll_widget.dart';
+import 'package:nutridaiet/iu/customWidgets/file_upload_dialog.dart';
+import 'customWidgets/button_app.dart';
+import 'customWidgets/grid_view_scroll_widget.dart';
 import 'customWidgets/logo.dart';
 
 class RecetasPage extends StatefulWidget {
@@ -29,7 +28,7 @@ class _RecetasPageState extends State<RecetasPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    logo(),
+                    const Logo(),
                     _buildListContainer(const GridViewScrollWidget(height: 500),
                         "Recetas", false),
                     _buildListContainer(
@@ -59,7 +58,8 @@ class _RecetasPageState extends State<RecetasPage> {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(fontSize: 22, fontFamily: 'Arvo'),
+                        style:
+                            const TextStyle(fontSize: 22, fontFamily: 'Arvo'),
                       ),
                       if (showButton)
                         ButtonApp(
