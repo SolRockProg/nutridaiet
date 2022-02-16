@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nutridaiet/controllers/alimentos_controller.dart';
-import 'package:nutridaiet/iu/customWidgets/ListViewScrollWidget.dart';
-import 'package:nutridaiet/iu/customWidgets/FileUploadDialog.dart';
-import 'customWidgets/ButtonApp.dart';
-import 'customWidgets/GridViewScrollWidget.dart';
+import 'package:nutridaiet/iu/customWidgets/list_view_scroll_widget.dart';
+import 'package:nutridaiet/iu/customWidgets/file_upload_dialog.dart';
+import 'customWidgets/button_app.dart';
+import 'customWidgets/grid_view_scroll_widget.dart';
 import 'customWidgets/logo.dart';
 
 class RecetasPage extends StatefulWidget {
@@ -17,28 +16,34 @@ class _RecetasPageState extends State<RecetasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                width: 1200,
-                color: const Color(0xFFc7cedf),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    logo(),
-                    _buildListContainer(const GridViewScrollWidget(height: 500),
-                        "Recetas", false),
-                    _buildListContainer(
-                        const ListViewScrollWidget(), "Despensa", true)
-                  ],
-                ),
+      body: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(16),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              width: 1200,
+              color: const Color(0xFFc7cedf),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Logo(),
+                  Expanded(
+                    flex: 8,
+                    child: _buildListContainer(
+                        const GridViewScrollWidget(height: 500),
+                        "Recetas",
+                        false),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: _buildListContainer(
+                        const ListViewScrollWidget(), "Despensa", true),
+                  )
+                ],
               ),
-            )),
-      ),
+            ),
+          )),
     );
   }
 
@@ -59,7 +64,8 @@ class _RecetasPageState extends State<RecetasPage> {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(fontSize: 22, fontFamily: 'Arvo'),
+                        style:
+                            const TextStyle(fontSize: 22, fontFamily: 'Arvo'),
                       ),
                       if (showButton)
                         ButtonApp(
@@ -75,9 +81,11 @@ class _RecetasPageState extends State<RecetasPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: list,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: list,
+                  ),
                 ),
               ],
             )),

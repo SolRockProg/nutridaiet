@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nutridaiet/model/file.dart';
 
@@ -42,7 +41,7 @@ class DroppedFileWidget extends StatelessWidget {
         child: Container(
           width: 120,
           height: 120,
-          color: Color(0xFF007a79),
+          color: const Color(0xFF007a79),
           child: Center(
             child: Text(
               s,

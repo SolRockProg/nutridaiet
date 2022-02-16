@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nutridaiet/model/alimento.dart';
 import 'package:nutridaiet/model/receta.dart';
 import 'package:nutridaiet/repositories/recetas_rep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +18,7 @@ class RecetasController extends StateNotifier<AsyncValue<List<Receta>>> {
     if (response.second.statusCode == 200) {
       state = AsyncValue.data(response.first);
     } else {
-      print("Error: " + response.second.statusCode.toString());
+      log("Error: " + response.second.statusCode.toString());
     }
   }
 

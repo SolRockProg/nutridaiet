@@ -100,7 +100,7 @@ async def new_interaction(*, rate: int = 0, recipeId: int, username: str):
         )
 
     if not recipe:
-        return HTTPException(404, "La receta no existe")
+        raise HTTPException(404, "La receta no existe")
 
     return await client.interaccion.create(
         {
@@ -120,7 +120,7 @@ async def new_interaction(*, rate: int = 0, recipeId: int, username: str):
 async def get_recomendation(
     *,
     limitCaloriesMax: int = Query(10_000, gt=0),
-    limitCaloriesMin: int = Query(0, gt=0),
+    limitCaloriesMin: int = Query(0, ge=0),
     username: str,
     recetasVistas: bool = False,
     solo_despensa: bool = False,
@@ -130,14 +130,14 @@ async def get_recomendation(
     )
 
     if not user:
-        return HTTPException(404, f"Usuario con nombre {username} no encontrado")
+        raise HTTPException(404, f"Usuario con nombre {username} no encontrado")
 
     recommendation_user_id = user.id
 
     if not user.trained:
         aux_user = await find_similar_user(user, client)
         if aux_user == None:
-            return HTTPException(400, "No se han podido generar recomendaciones")
+            raise HTTPException(400, "No se han podido generar recomendaciones")
         recommendation_user_id = aux_user.id
 
     params: RecetasWhereInput = {
@@ -202,15 +202,18 @@ async def get_pantry(username: str):
         include={"IngredientesDespensa": {"include": {"Ingrediente": True}}},
     )
     if not user:
-        return HTTPException(404, f"Usuario con nombre {username} no encontrado")
+        raise HTTPException(404, f"Usuario con nombre {username} no encontrado")
     return user.IngredientesDespensa
 
 
 @app.post("/pantry")
-async def post_pantry(username: int, ingredientId: int, cantidad: int):
-    user = await client.usuario.find_first(where={"id": username})
+async def post_pantry(username: str, ingredientId: int, cantidad: int):
+    user = await client.usuario.find_first(where={"nombre": username})
+    ingredient = await client.ingredientes.find_first(where={"id":ingredientId})
     if not user:
-        return HTTPException(404, f"Usuario con nombre {username} no encontrado")
+        raise HTTPException(404, f"Usuario con nombre {username} no encontrado")
+    if not ingredient:
+        raise HTTPException(404, f"El ingrediente no existe")
 
     if cantidad <= 0:
         return await client.ingredientesdespensa.delete(
@@ -241,43 +244,45 @@ async def post_pantry(username: int, ingredientId: int, cantidad: int):
 
 
 @app.post("/pantry/ticket")
-async def post_ticket(user: int, file: UploadFile):
+async def post_ticket(username: str, file: UploadFile):
     
+    user = await client.usuario.find_first(where={"nombre": username}, include={"IngredientesDespensa": {"include": {"Ingrediente": True}}})
+
+    if user == None:
+        raise HTTPException(404, "Usuario no encontrado")
+
     content = await file.read()
     image = vision.Image(content=content)
     response = google.text_detection(image=image) #type: ignore
     texts = response.text_annotations
     words = spacy_tokenizer(texts[0].description) 
-    food_list = []
     for word in words:
         similar = search_similar_food(word)
         if len(similar) > 0:
             await client.ingredientesdespensa.upsert(
                 where={
                     "usuarioId_ingredientesId": {
-                        "usuarioId": user,
+                        "usuarioId": user.id,
                         "ingredientesId": similar[0],
                     }
                 },
                 data={
                     "create": {
                         "cantidad": 1,
-                        "usuario": {"connect": {"id": user}},
+                        "usuario": {"connect": {"id": user.id}},
                         "Ingrediente": {"connect": {"id": similar[0]}},
                     },
                     "update": {"cantidad": 1},
                 },
             )
-    usuario = await client.usuario.find_first(where={"id": user}, include={"IngredientesDespensa": {"include": {"Ingrediente": True}}})
 
-    if usuario == None:
-        return HTTPException(404, "Usuario no encontrado")
+    user = await client.usuario.find_first(where={"nombre": username}, include={"IngredientesDespensa": {"include": {"Ingrediente": True}}})
 
-    return usuario.IngredientesDespensa
+    return user.IngredientesDespensa
 
 def spacy_tokenizer(sentence):
     sentence = re.sub('\'','',sentence)
-    sentence = re.sub('\w*\d\w*','',sentence)
+    sentence = re.sub('\\w*\\d\\w*','',sentence)
     sentence = re.sub(' +',' ',sentence)
     sentence = re.sub(r'\n: \'\'.*','',sentence)
     sentence = re.sub(r'\n!.*','',sentence)
@@ -309,4 +314,3 @@ def search_similar_food(search_term):
         if j == (food_index.num_best-1):
             break
     return food_names
-    #return pd.DataFrame(food_names, columns=['Relevance','Food ingredient','Food Plot'])

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class logo extends StatelessWidget {
-  logo({
+class Logo extends StatelessWidget {
+  const Logo({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style = TextStyle(fontSize: 60, fontFamily: 'Arvo');
+    TextStyle style = const TextStyle(fontSize: 60, fontFamily: 'Arvo');
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Row(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/model/alimento.dart';
 import 'package:nutridaiet/repositories/alimentos_rep.dart';
@@ -26,7 +28,7 @@ class AlimentosController extends StateNotifier<AsyncValue<List<Alimento>>> {
     if (response.second.statusCode == 200) {
       state = AsyncValue.data(response.first);
     } else {
-      print("Error: " + response.second.statusCode.toString());
+      log("Error: " + response.second.statusCode.toString());
     }
   }
 }

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/controllers/recetas_controller.dart';
 
-import 'package:nutridaiet/iu/customWidgets/ButtonApp.dart';
 import 'package:nutridaiet/repositories/recetas_rep.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'customWidgets/GridViewScrollWidget.dart';
+import 'customWidgets/grid_view_scroll_widget.dart';
 import 'customWidgets/logo.dart';
 
 class ValoracionesPage extends ConsumerStatefulWidget {
@@ -26,29 +25,30 @@ class _ValoracionesPageState extends ConsumerState<ValoracionesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(16),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Container(
-                width: 1200,
-                padding: const EdgeInsets.all(10),
-                color: const Color(0xFFc7cedf),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    logo(),
-                    _username(),
-                    _buildListContainer(const GridViewScrollWidget(),
+      body: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(16),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              constraints: const BoxConstraints(
+                  minHeight: 400, minWidth: 600, maxWidth: 1200),
+              padding: const EdgeInsets.all(10),
+              color: const Color(0xFFc7cedf),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Logo(),
+                  _username(),
+                  Expanded(
+                    child: _buildListContainer(const GridViewScrollWidget(),
                         "Necesitamos que valore las siguientes recetas", false),
-                    _creaPerfil()
-                  ],
-                ),
+                  ),
+                  _creaPerfil()
+                ],
               ),
-            )),
-      ),
+            ),
+          )),
     );
   }
 
@@ -95,9 +95,11 @@ class _ValoracionesPageState extends ConsumerState<ValoracionesPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: list,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: list,
+                  ),
                 ),
               ],
             )),
@@ -123,13 +125,7 @@ class _ValoracionesPageState extends ConsumerState<ValoracionesPage> {
               await valoraRepo.setValoracion(receta);
             }
           }
-          widget.controller.animateToPage(
-            1,
-            curve: Curves.bounceIn,
-            duration: const Duration(
-              milliseconds: 500,
-            ),
-          );
+          widget.controller.jumpToPage(1);
         },
         style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(16),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nutridaiet/iu/recetaspage.dart';
-import 'package:nutridaiet/iu/valoracionesPage.dart';
+import 'package:nutridaiet/iu/valoraciones_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InitialPage extends StatefulWidget {
@@ -23,12 +23,8 @@ class _InitialPageState extends State<InitialPage> {
     final prefs = await SharedPreferences.getInstance();
     String? nombre = prefs.getString("nombre");
     if (nombre != null) {
-      controller.animateToPage(
+      controller.jumpToPage(
         1,
-        curve: Curves.bounceIn,
-        duration: const Duration(
-          milliseconds: 500,
-        ),
       );
     }
   }

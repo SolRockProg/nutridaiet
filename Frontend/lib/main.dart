@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nutridaiet/iu/initialPage.dart';
-import 'package:nutridaiet/iu/valoracionesPage.dart';
-import 'package:nutridaiet/iu/recetaspage.dart';
+import 'package:nutridaiet/iu/initial_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: App()));

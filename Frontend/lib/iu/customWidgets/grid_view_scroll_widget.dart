@@ -29,7 +29,7 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
   Widget build(BuildContext context) {
     final recetasListState = ref.watch(recetasState);
     return SizedBox(
-        height: widget.height ?? MediaQuery.of(context).size.height * 0.75,
+        // height: widget.height ?? MediaQuery.of(context).size.height * 0.75,
         width: double.infinity,
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(
@@ -77,13 +77,13 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
                 fontfamily: 'Arvo',
                 textAlign: TextAlign.center,
               ),
-              Spacer(),
+              const Spacer(),
               TextCustom(
                 text: recetas[index].descripcion,
                 maxLines: 4,
                 textAlign: TextAlign.justify,
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
