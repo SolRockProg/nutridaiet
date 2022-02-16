@@ -1,12 +1,13 @@
+import 'dart:html';
+
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:nutridaiet/iu/customWidgets/ButtonApp.dart';
 import 'package:nutridaiet/model/file.dart';
+import 'ButtonApp.dart';
 
 class DropZoneWidget extends StatefulWidget {
-  final ValueChanged<File> onDroppedFile;
+  final ValueChanged<LocalFile> onDroppedFile;
 
   const DropZoneWidget({
     Key? key,
@@ -52,7 +53,11 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
                       Icons.search,
                       size: 32,
                     ),
-                    onPressed: () => {})
+                    onPressed: () async {
+                      final events = await controller.pickFiles();
+                      if (events.isEmpty) return;
+                      getFile(events.first);
+                    })
               ],
             ),
           ),
@@ -64,8 +69,8 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
   Future getFile(event) async {
     final url = await controller.createFileUrl(event);
     final name = await controller.getFilename(event);
-
-    final file = File(url: url, name: name);
+    final fileData = await controller.getFileData(event);
+    final file = LocalFile(url: url, name: name, fileData: fileData);
 
     widget.onDroppedFile(file);
   }
@@ -74,7 +79,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        color: isFileAbove ? Color(0xFF007a79) : Color(0xFF007A7A),
+        color: isFileAbove ? const Color(0xFF007a79) : const Color(0xFF007A7A),
         padding: const EdgeInsets.all(10),
         child: DottedBorder(
             borderType: BorderType.RRect,

@@ -17,7 +17,7 @@ class AlimentosController extends StateNotifier<AsyncValue<List<Alimento>>> {
     _updateAlimentos(response);
   }
 
-  Future<void> sendTicket(File file) async {
+  Future<void> sendTicket(LocalFile file) async {
     var response = await _reader(alimentosRepositoryProvider).sendTicket(file);
     _updateAlimentos(response);
   }

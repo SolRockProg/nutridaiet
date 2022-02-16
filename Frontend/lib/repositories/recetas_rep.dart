@@ -16,7 +16,16 @@ final recetasRespositoryProvider =
 class RecetasRepository extends IRecetasRepository {
   @override
   Future<Pair<List<Receta>, InfoResponse>> getRecetas() async {
-    var uri = Uri.parse(url + "/recetas");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var uri;
+    if (prefs.getString('nombre') != null) {
+      uri = Uri.parse(url +
+          "/recomendations?username=" +
+          prefs.getString('nombre')! +
+          "&limitCaloriesMin=1");
+    } else {
+      uri = Uri.parse(url + "/recetas");
+    }
 
     var response = await http
         .get(uri, headers: {HttpHeaders.accessControlAllowOriginHeader: "*"});

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nutridaiet/model/file.dart';
 
 class DroppedFileWidget extends StatelessWidget {
-  final File? file;
+  final LocalFile? file;
   const DroppedFileWidget({Key? key, this.file}) : super(key: key);
 
   @override

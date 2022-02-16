@@ -12,15 +12,18 @@ import 'package:nutridaiet/utils/tuple.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final alimentosRepositoryProvider =
-    Provider<IRecetasRepository>((_) => RecetasRepository());
+    Provider<IAlimentosRepository>((_) => AlimentosRepository());
 
-class RecetasRepository implements IRecetasRepository {
+class AlimentosRepository implements IAlimentosRepository {
   @override
-  Future<Pair<List<Alimento>, InfoResponse>> sendTicket(File file) async {
+  Future<Pair<List<Alimento>, InfoResponse>> sendTicket(LocalFile file) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var uri =
-        Uri.parse(url + "/pantry/ticket?user=" + prefs.getString('nombre')!);
-    var img = await http.MultipartFile.fromPath("file", file.url);
+
+    var uri = Uri.parse(
+        url + "/pantry/ticket?username=" + prefs.getString('nombre')!);
+
+    var img = http.MultipartFile.fromBytes("file", file.fileData,
+        filename: file.name);
 
     var request = http.MultipartRequest("POST", uri);
     request.files.add(img);

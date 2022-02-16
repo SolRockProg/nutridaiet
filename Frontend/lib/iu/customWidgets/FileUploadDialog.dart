@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nutridaiet/model/file.dart';
 
 import '../../controllers/alimentos_controller.dart';
+import '../../model/file.dart';
 import 'DropZoneWidget.dart';
+import 'DroppedFileWidget.dart';
 
 class PruebaDialog extends ConsumerStatefulWidget {
   const PruebaDialog({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class PruebaDialog extends ConsumerStatefulWidget {
 }
 
 class _PruebaDialogState extends ConsumerState<PruebaDialog> {
+  LocalFile? file;
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -21,14 +24,17 @@ class _PruebaDialogState extends ConsumerState<PruebaDialog> {
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: SizedBox(
-        height: 300,
-        width: 700,
-        child: DropZoneWidget(
-          onDroppedFile: (file) =>
-              {() => ref.read(alimentosState.notifier).sendTicket(file)},
-        ),
-      ),
+      child: Column(children: [
+        DroppedFileWidget(file: file),
+        SizedBox(
+            height: 300,
+            width: 700,
+            child: DropZoneWidget(
+                onDroppedFile: (file) => {
+                      setState(() => this.file = file),
+                      ref.read(alimentosState.notifier).sendTicket(file)
+                    }))
+      ]),
     );
   }
 }
