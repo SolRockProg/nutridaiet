@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nutridaiet/controllers/recetas_controller.dart';
@@ -125,6 +127,7 @@ class _ValoracionesPageState extends ConsumerState<ValoracionesPage> {
               await valoraRepo.setValoracion(receta);
             }
           }
+          unawaited(ref.read(recetasState.notifier).getRecetas());
           widget.controller.jumpToPage(1);
         },
         style: ElevatedButton.styleFrom(

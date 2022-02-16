@@ -7,13 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final recetasState =
     StateNotifierProvider<RecetasController, AsyncValue<List<Receta>>>(
-        (ref) => RecetasController(ref.read));
+        (ref) => RecetasController(ref.read)..getRecetas());
 
 class RecetasController extends StateNotifier<AsyncValue<List<Receta>>> {
   final Reader _reader;
   RecetasController(this._reader) : super(const AsyncValue.loading());
 
   Future<void> getRecetas() async {
+    state = const AsyncValue.loading();
     var response = await _reader(recetasRespositoryProvider).getRecetas();
     if (response.second.statusCode == 200) {
       state = AsyncValue.data(response.first);

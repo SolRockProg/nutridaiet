@@ -20,12 +20,6 @@ class GridViewScrollWidget extends ConsumerStatefulWidget {
 
 class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
   @override
-  void initState() {
-    super.initState();
-    ref.read(recetasState.notifier).getRecetas();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final recetasListState = ref.watch(recetasState);
     return SizedBox(

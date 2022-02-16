@@ -17,20 +17,21 @@ class RecetasRepository extends IRecetasRepository {
   @override
   Future<Pair<List<Receta>, InfoResponse>> getRecetas() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var uri;
+    Uri uri;
     if (prefs.getString('nombre') != null) {
       uri = Uri.parse(url +
           "/recomendations?username=" +
           prefs.getString('nombre')! +
-          "&limitCaloriesMin=1");
+          "&limitCaloriesMin=1&cantidad=9");
     } else {
-      uri = Uri.parse(url + "/recetas");
+      uri = Uri.parse(url + "/recetas?cantidad=9");
     }
 
     var response = await http
         .get(uri, headers: {HttpHeaders.accessControlAllowOriginHeader: "*"});
     List<Receta> recetas = (json.decode(response.body) as List)
         .map((receta) => Receta.fromJson(receta))
+        .take(9)
         .toList();
 
     return Pair(recetas, InfoResponse(statusCode: response.statusCode));

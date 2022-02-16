@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nutridaiet/controllers/recetas_controller.dart';
 import 'package:nutridaiet/iu/customWidgets/list_view_scroll_widget.dart';
 import 'package:nutridaiet/iu/customWidgets/file_upload_dialog.dart';
 import 'customWidgets/button_app.dart';
 import 'customWidgets/grid_view_scroll_widget.dart';
 import 'customWidgets/logo.dart';
 
-class RecetasPage extends StatefulWidget {
+class RecetasPage extends ConsumerStatefulWidget {
   const RecetasPage({Key? key}) : super(key: key);
 
   @override
   _RecetasPageState createState() => _RecetasPageState();
 }
 
-class _RecetasPageState extends State<RecetasPage> {
+class _RecetasPageState extends ConsumerState<RecetasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
