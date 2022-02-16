@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nutridaiet/iu/customWidgets/drop_zone_widget.dart';
+import 'package:nutridaiet/iu/customWidgets/dropped_file_widget.dart';
 
 import '../../controllers/alimentos_controller.dart';
 import '../../model/file.dart';
-import 'DropZoneWidget.dart';
-import 'DroppedFileWidget.dart';
 
 class PruebaDialog extends ConsumerStatefulWidget {
   const PruebaDialog({Key? key}) : super(key: key);

@@ -3,8 +3,8 @@ import 'dart:html';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:nutridaiet/iu/customWidgets/button_app.dart';
 import 'package:nutridaiet/model/file.dart';
-import 'ButtonApp.dart';
 
 class DropZoneWidget extends StatefulWidget {
   final ValueChanged<LocalFile> onDroppedFile;
