@@ -68671,7 +68671,7 @@ p.push(A.a36(r,A.dG(r,A.nd(A.eI("x"+B.f.j(q[b].c),r,r,r,r,r,r),r,r),r,r,new A.eW
 $S:422}
 A.I_.prototype={
 K(a,b){var s=null
-return new A.c_(B.mj,A.kt(A.b([new A.nE(A.aoZ(s,s,new A.vr("lib/iu/images/nu.png",s,s)),s,80,80,s,s),B.Ge,A.eI("Nutrid",s,s,s,B.vm,s,s),B.MQ,A.eI("et",s,s,s,B.vm,s,s)],t.F),B.ci,B.a1),s)}}
+return new A.c_(B.mj,A.kt(A.b([new A.nE(A.aoZ(s,s,new A.vr("images/nu.png",s,s)),s,80,80,s,s),B.Ge,A.eI("Nutrid",s,s,s,B.vm,s,s),B.MQ,A.eI("et",s,s,s,B.vm,s,s)],t.F),B.ci,B.a1),s)}}
 A.nI.prototype={
 az(){return new A.OR(B.k)}}
 A.OR.prototype={
