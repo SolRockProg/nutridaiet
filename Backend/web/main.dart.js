@@ -68815,7 +68815,7 @@ s=3
 return A.a0(A.ku(),$async$hS)
 case 3:j=i.bR(h.au(c.a,"nombre"))
 j.toString
-o=A.jj("https://nutridaiet.ddns.net/pantry/ticket?username="+j)
+o=A.jj("https://nutridaiet.ddns.net:80/pantry/ticket?username="+j)
 j=a.c
 n=A.asq(new A.jO(A.ajP(j,t.Cm)))
 m=A.ajk("application","octet-stream",null)
@@ -68842,7 +68842,7 @@ case 3:m=l.bR(k.au(b.a,"nombre"))
 m.toString
 o=t.N
 s=4
-return A.a0(A.arP(A.jj("https://nutridaiet.ddns.net/pantry?username="+m),A.aI(["access-control-allow-origin","*"],o,o)),$async$ih)
+return A.a0(A.arP(A.jj("https://nutridaiet.ddns.net:80/pantry?username="+m),A.aI(["access-control-allow-origin","*"],o,o)),$async$ih)
 case 4:n=b
 q=new A.o3(p.P6(n),new A.k0(n.b),t.Fp)
 s=1
@@ -68869,11 +68869,11 @@ case 3:m=c.a
 l=J.an(m)
 if(A.bR(l.h(m,"nombre"))!=null){m=A.bR(l.h(m,"nombre"))
 m.toString
-m="https://nutridaiet.ddns.net/recomendations?username="+m
+m="https://nutridaiet.ddns.net:80/recomendations?username="+m
 l=a.a
 l="&limitCaloriesMin="+A.f(l)+"&limitCaloriesMax="
 p=a.b
-o=A.jj(m+(l+A.f(p)+"&cantidad=9"))}else o=A.jj("https://nutridaiet.ddns.net/recetas?cantidad=9")
+o=A.jj(m+(l+A.f(p)+"&cantidad=9"))}else o=A.jj("https://nutridaiet.ddns.net:80/recetas?cantidad=9")
 m=t.N
 s=4
 return A.a0(A.arP(o,A.aI(["access-control-allow-origin","*"],m,m)),$async$pd)
@@ -68895,7 +68895,7 @@ o.toString
 p=t.N
 n=A
 s=4
-return A.a0(A.aH8(A.jj("https://nutridaiet.ddns.net/new_interaction?username="+o+"&rate="+B.d.j(a.r)+"&recipeId="+B.f.j(a.a)),A.aI(["access-control-allow-origin","*"],p,p)),$async$he)
+return A.a0(A.aH8(A.jj("https://nutridaiet.ddns.net:80/new_interaction?username="+o+"&rate="+B.d.j(a.r)+"&recipeId="+B.f.j(a.a)),A.aI(["access-control-allow-origin","*"],p,p)),$async$he)
 case 4:q=new n.k0(c.b)
 s=1
 break
