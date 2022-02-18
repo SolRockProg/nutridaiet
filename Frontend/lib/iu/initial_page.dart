@@ -15,8 +15,8 @@ class _InitialPageState extends State<InitialPage> {
   @override
   void initState() {
     controller = PageController(initialPage: 0);
-    _muevePage();
     super.initState();
+    _muevePage();
   }
 
   void _muevePage() async {
