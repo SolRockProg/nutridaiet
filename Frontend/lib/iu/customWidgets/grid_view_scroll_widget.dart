@@ -73,7 +73,7 @@ class _GridViewScrollWidgetState extends ConsumerState<GridViewScrollWidget> {
               ),
               const Spacer(),
               TextCustom(
-                text: recetas[index].descripcion,
+                text: recetas[index].descripcion ?? "No description",
                 maxLines: 4,
                 textAlign: TextAlign.justify,
               ),

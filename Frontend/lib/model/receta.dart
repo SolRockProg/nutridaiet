@@ -4,7 +4,7 @@ class Receta extends Equatable {
   final int id;
   final String name;
   final int tiempo;
-  final String descripcion;
+  final String? descripcion;
   final List<String> steps;
   final double calorias;
   final double valoracion;

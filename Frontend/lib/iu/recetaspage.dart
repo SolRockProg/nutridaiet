@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nutridaiet/controllers/recetas_controller.dart';
-import 'package:nutridaiet/iu/customWidgets/list_view_scroll_widget.dart';
-import 'package:nutridaiet/iu/customWidgets/file_upload_dialog.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+
+import 'package:nutridaiet/controllers/calorias_controller.dart';
+import 'package:nutridaiet/iu/customWidgets/file_upload_dialog.dart';
+import 'package:nutridaiet/iu/customWidgets/list_view_scroll_widget.dart';
+
 import 'customWidgets/button_app.dart';
 import 'customWidgets/grid_view_scroll_widget.dart';
 import 'customWidgets/logo.dart';
@@ -71,21 +73,28 @@ class _RecetasPageState extends ConsumerState<RecetasPage> {
         icon: const Icon(Icons.local_fire_department_outlined),
         onPressed: () => showDialog(
             context: context,
-            builder: (BuildContext context) => DialogCalories()));
+            builder: (BuildContext context) => const DialogCalories()));
   }
 }
 
-class DialogCalories extends StatefulWidget {
+class DialogCalories extends ConsumerStatefulWidget {
   const DialogCalories({Key? key}) : super(key: key);
 
   @override
   _DialogCaloriesState createState() => _DialogCaloriesState();
 }
 
-class _DialogCaloriesState extends State<DialogCalories> {
+class _DialogCaloriesState extends ConsumerState<DialogCalories> {
+  late SfRangeValues newValues;
+  @override
+  void initState() {
+    SfRangeValues currentValues = ref.read(caloriasProvider);
+    newValues = SfRangeValues(currentValues.start, currentValues.end);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    SfRangeValues _values = SfRangeValues(1000, 4000);
     return Dialog(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -105,7 +114,7 @@ class _DialogCaloriesState extends State<DialogCalories> {
                   dragMode: SliderDragMode.onThumb,
                   min: 0,
                   max: 5000,
-                  values: _values,
+                  values: newValues,
                   interval: 500,
                   showTicks: true,
                   showLabels: true,
@@ -113,7 +122,7 @@ class _DialogCaloriesState extends State<DialogCalories> {
                   minorTicksPerInterval: 1,
                   onChanged: (SfRangeValues values) {
                     setState(() {
-                      _values = values;
+                      newValues = values;
                     });
                   },
                 ),
@@ -124,9 +133,13 @@ class _DialogCaloriesState extends State<DialogCalories> {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: ButtonApp(
-                        text: "Enviar",
-                        icon: Icon(Icons.send),
-                        onPressed: () => {}),
+                      text: "Enviar",
+                      icon: const Icon(Icons.send),
+                      onPressed: () {
+                        ref.read(caloriasProvider.notifier).state = newValues;
+                        Navigator.of(context).pop();
+                      },
+                    ),
                   )
                 ],
               )

@@ -21,8 +21,12 @@ from prisma.types import RecetasWhereInput
 from surprise import SVD
 from surprise.dump import load
 
+from fastapi.staticfiles import StaticFiles
+from starlette.responses import FileResponse 
+
 app = FastAPI(title="API NutridAIet")
 client = Client(auto_register=True)
+app.mount("/web", StaticFiles(directory="web"), name="web")
 
 
 app.add_middleware(
@@ -53,6 +57,7 @@ food_tfidf_model = TfidfModel.load('NLP/tfidf')
 food_index = gensim.utils.SaveLoad.load('NLP/food_index')
 
 
+
 @app.on_event("startup")
 async def startup() -> None:
     await client.connect()
@@ -65,6 +70,10 @@ async def shutdown() -> None:
     if client.is_connected():
         await client.disconnect()
 
+
+@app.get("/")
+async def read_index():
+    return FileResponse('web/index.html')
 
 @app.get("/recetas")
 async def getdbase(cantidad: int = Query(10,ge=1, le=100))->list:

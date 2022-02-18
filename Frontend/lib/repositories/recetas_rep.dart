@@ -9,20 +9,22 @@ import 'package:nutridaiet/utils/tuple.dart';
 import 'package:nutridaiet/utils/error_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 final recetasRespositoryProvider =
     Provider<IRecetasRepository>((_) => RecetasRepository());
 
 class RecetasRepository extends IRecetasRepository {
   @override
-  Future<Pair<List<Receta>, InfoResponse>> getRecetas() async {
+  Future<Pair<List<Receta>, InfoResponse>> getRecetas(
+      {SfRangeValues? calorias}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Uri uri;
     if (prefs.getString('nombre') != null) {
       uri = Uri.parse(url +
           "/recomendations?username=" +
           prefs.getString('nombre')! +
-          "&limitCaloriesMin=1&cantidad=9");
+          "&limitCaloriesMin=${calorias?.start ?? 0}&limitCaloriesMax=${calorias?.end ?? 10000}&cantidad=9");
     } else {
       uri = Uri.parse(url + "/recetas?cantidad=9");
     }
