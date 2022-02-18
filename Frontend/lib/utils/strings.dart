@@ -1,1 +1,1 @@
-const String url = "https://nutridaiet.ddns.net:8000";
+const String url = "https://nutridaiet.ddns.net";
