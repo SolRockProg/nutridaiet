@@ -24,7 +24,7 @@ class RecetasRepository extends IRecetasRepository {
       uri = Uri.parse(url +
           "/recomendations?username=" +
           prefs.getString('nombre')! +
-          "&limitCaloriesMin=${calorias?.start ?? 0}&limitCaloriesMax=${calorias?.end ?? 10000}&cantidad=9");
+          "&limitCaloriesMin=${calorias?.start.toInt() ?? 0}&limitCaloriesMax=${calorias?.end.toInt() ?? 10000}&cantidad=9");
     } else {
       uri = Uri.parse(url + "/recetas?cantidad=9");
     }
